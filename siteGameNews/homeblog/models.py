@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.db.models import Sum
 from django.contrib.auth.models import User
 
-import string
+# import string
 
 
 class Author(models.Model):
@@ -47,6 +47,25 @@ class Article(models.Model):
 
     def get_author_url(self):
         return reverse('author_page', kwargs={'author': self.author})
+
+
+class Comment(models.Model):
+    commentPost = models.ForeignKey(Article, on_delete=models.CASCADE)
+    userPost = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    dataCreation = models.DateTimeField(auto_now_add=True)
+    rating = models.SmallIntegerField(default=0)
+
+    def like(self):
+        self.rating += 1
+        self.save()
+
+    def dislike(self):
+        self.rating -= 1
+        self.save()
+
+    def __str__(self):
+        return f"{self.dataCreation}, {self.userPost}"
 
     # def censor(text, bad_words):
     #     text_list = text.split()
