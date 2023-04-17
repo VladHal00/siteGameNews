@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Amateur Gaming Community{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
+            <div class="article-list">
+                {% for article in articles %}
+                    <div class="article">
+                        <h1 class="article-title">
+                            <a href="{{ article.get_absolute_url }}">{{ article.title | safe }}</a>
+                        </h1>
+                        <div class="article-text">{{ article.full_text | safe }}</div>
+                        <div class="article-footer">
+                            📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
+                            📁<a href="{{ article.get_get_author_url }}">{{ article.author }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
